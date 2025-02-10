@@ -1,0 +1,104 @@
+.language-detector-section {
+  margin-top: -50px; /* Adjust as needed */
+}
+
+
+.language-detector-section h3 {
+  font-size: 20px; /* Adjust the size as needed */
+  font-weight: bold; /* Makes the text bold */
+}
+
+.language-detector-section .title-color {
+  color: #5D92F4;
+  margin-top: 10px; /* Reduced top margin */
+  margin-bottom: 10px; /* Reduced bottom margin */
+}
+
+.language-detector-section .textarea-container {
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #D4D9DF;
+  border-radius: 4px;
+  padding: 15px;
+}
+
+.language-detector-section #outputText {
+  color: SteelBlue;
+}
+
+.language-detector-section .delete-button {
+  position: absolute;
+  top: 30px; /* Adjusted top position for all screens */
+  right: 10px;
+  margin-top: 10px;
+  color: #D9534F;
+}
+
+@media (max-width: 767px) {
+  .language-detector-section .delete-button {
+    top: 40px; /* Adjust as needed for mobile screens */
+    margin-top: 30px;
+  }
+}
+
+
+.language-detector-section .box-header {
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: center;
+  background-color: #5D92F4;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.language-detector-section textarea.form-control {
+  min-height: 250px;
+}
+
+.language-detector-section .check-button-container {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.language-detector-section .check-button {
+  width: 150px;
+  background-color: #5D92F4;
+  color: #fff;
+}
+
+.language-detector-section .processing-message {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.language-detector-section .spinner {
+  margin: 0 auto;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #5D92F4;
+  border-radius: 50%;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .language-detector-section .textarea-container {
+    margin-bottom: 15px; /* Added bottom margin for spacing on small screens */
+  }
+
+  .language-detector-section .delete-button {
+    top: 10px; /* Adjust position for smaller screens */
+  }
+}

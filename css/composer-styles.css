@@ -1,0 +1,143 @@
+.lyric-generator-section {
+  margin-top: -50px; /* Adjust as needed */
+}
+
+
+.lyric-generator-section h3 {
+  font-size: 20px; /* Adjust the size as needed */
+  font-weight: bold; /* Makes the text bold */
+}
+
+.lyric-generator-section .textarea-container {
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #D4D9DF;
+  border-radius: 4px;
+  padding: 15px;
+}
+
+.lyric-generator-section body {
+  background-color: #F5F7FA;
+  color: #333;
+}
+
+.lyric-generator-section .title-color {
+  color: #5D92F4;
+  margin-top: 10px; /* Reduced top margin */
+  margin-bottom: 10px; /* Reduced bottom margin */
+}
+
+.lyric-generator-section .textarea-container {
+  position: relative;
+}
+
+.lyric-generator-section #notify {
+  color: steelblue;
+}
+
+.lyric-generator-section #outputText {
+  color: SteelBlue;
+  height: 450px;
+  overflow-y: auto;
+}
+
+.lyric-generator-section .delete-button {
+  position: absolute;
+  top: 1px;
+  right: 10px;
+  margin-top: 10px;
+  color: #D9534F;
+}
+
+.lyric-generator-section .copy-button {
+  position: absolute;
+  top: 1px;
+  right: 10px;
+  margin-top: 10px;
+  color: lightseagreen;
+}
+
+.lyric-generator-section .box-header {
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: center;
+  background-color: #5D92F4;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.lyric-generator-section textarea.form-control {
+  min-height: 250px;
+}
+
+.lyric-generator-section .check-button-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.lyric-generator-section .check-button {
+  width: 150px;
+  background-color: #5D92F4;
+  color: #fff;
+}
+
+.lyric-generator-section .processing-message {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.lyric-generator-section .spinner {
+  margin: 0 auto;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #5D92F4;
+  border-radius: 50%;
+  animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* CSS for Error Modal */
+.lyric-generator-section .modal-content {
+  color: #333; /* Dark grey */
+  background-color: #e3f2fd; /* Light Blue */
+}
+
+.lyric-generator-section .modal-header {
+  border-bottom-color: #bbdefb; /* Medium Blue */
+}
+
+.lyric-generator-section .modal-footer {
+  border-top-color: #bbdefb; /* Medium Blue */
+}
+
+.lyric-generator-section .btn-secondary {
+  background-color: #90caf9; /* Darker Blue */
+  color: white; /* White text for contrast */
+}
+
+
+/* Responsive adjustments for smaller screens */
+@media (max-width: 767px) {
+  .lyric-generator-section .textarea-container {
+    margin-bottom: 15px; /* Adds more space below each textarea container */
+    padding: 10px; /* Reduces padding for smaller screens */
+  }
+
+  .lyric-generator-section .delete-button, .lyric-generator-section .copy-button {
+    top: 10px; /* Adjust button positioning for smaller screens */
+  }
+
+  .lyric-generator-section textarea.form-control {
+    min-height: 150px; /* Smaller height for mobile devices */
+  }
+}
