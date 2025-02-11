@@ -1,3 +1,8 @@
+/* Prevent horizontal overflow on the entire page */
+html, body {
+  overflow-x: hidden;
+}
+
 .translator-section {
   margin-top: -50px; /* Adjust as needed */
 }
@@ -13,6 +18,8 @@
   border: 1px solid #D4D9DF;
   border-radius: 4px;
   padding: 15px;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .translator-section body {
@@ -60,8 +67,12 @@
   border-radius: 5px;
 }
 
+/* Updated textarea styling to force text wrapping */
 .translator-section textarea.form-control {
   min-height: 250px;
+  white-space: pre-wrap;       /* Allow text to wrap preserving whitespace */
+  word-wrap: break-word;       /* Legacy support */
+  overflow-wrap: break-word;   /* Modern browsers */
 }
 
 .translator-section .check-button-container {
@@ -124,7 +135,6 @@
   background-color: #90caf9; /* Darker Blue */
   color: white; /* White text for contrast */
 }
-
 
 /* Responsive adjustments */
 @media (max-width: 767px) {
