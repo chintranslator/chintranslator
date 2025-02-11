@@ -1,4 +1,40 @@
 $(document).ready(function(){
+  // Maximum allowed words
+  var maxWords = 30;
+
+  // Ensure a word count display element exists in the input container
+  if ($("#wordCount").length === 0) {
+    // Append it to the first .textarea-container that holds the input (adjust if necessary)
+    $("#inputText").closest(".textarea-container").append(
+      '<div id="wordCount" style="position:absolute; bottom:15px; right:20px; font-size:0.8em; color:#999;">0/' + maxWords + '</div>'
+    );
+  }
+
+  // Function to update the word count display
+  function updateWordCount() {
+    var text = $("#inputText").val();
+    // Use a regex to split by whitespace and filter out empty strings
+    var words = text.trim().split(/\s+/).filter(function(word) {
+      return word.length > 0;
+    });
+    var count = words.length;
+    $("#wordCount").text(count + "/" + maxWords);
+
+    // If the count exceeds maxWords, trim the text and alert the user
+    if(count > maxWords) {
+      var trimmedWords = words.slice(0, maxWords);
+      $("#inputText").val(trimmedWords.join(" "));
+      $("#wordCount").text(maxWords + "/" + maxWords);
+      alert("Maximum word limit reached (" + maxWords + " words). Please shorten your text.");
+    }
+  }
+
+  // Bind the input event to update the count as the user types
+  $("#inputText").on("input", function(){
+    updateWordCount();
+  });
+
+  // Existing translation button click logic with an updated word count check
   $("#translateButton").click(function(){
     var sentence = $("#inputText").val().trim();
     // The select now returns FLM or ENG (matching the API language codes)
@@ -8,13 +44,13 @@ $(document).ready(function(){
     var processingMessage = $(".processing-message");
     var spinner = $(".spinner");
 
-    // Check word count
-    var words = sentence.split(' ').filter(function(word) {
+    // Check word count on submit
+    var words = sentence.split(/\s+/).filter(function(word) {
       return word.length > 0;
     });
 
-    if (words.length > 100) {
-      alert("Please enter words less than 15. Your current word count is " + words.length + ".");
+    if (words.length > maxWords) {
+      alert("Please shorten your input to " + maxWords + " words. Your current word count is " + words.length + ".");
       return;
     }
 
@@ -34,7 +70,7 @@ $(document).ready(function(){
 
     $.ajax({
       type: "POST",
-      // Updated URL: This Cloud Function proxies to your Cloud Run service
+      // Cloud Function endpoint that proxies to Cloud Run
       url: "https://asia-southeast1-chintranslator.cloudfunctions.net/chintranslator-proxy",
       data: JSON.stringify({
         text: sentence,
@@ -65,13 +101,14 @@ $(document).ready(function(){
     });
   });
 
-  // Delete button click event handler
+  // Delete button: clear the input, output, and reset word count display
   $("#deleteButton").click(function() {
     $("#inputText").val('');
     $("#outputText").val('');
+    $("#wordCount").text("0/" + maxWords);
   });
 
-  // Copy button click event handler
+  // Copy button: select and copy output text
   $("#copyButton").click(function() {
     var copyText = document.getElementById("outputText");
     copyText.select();
