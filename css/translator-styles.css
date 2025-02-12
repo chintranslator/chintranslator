@@ -67,7 +67,9 @@ html, body {
   border-radius: 5px;
 }
 
-/* Updated textarea styling to force text wrapping and restrict horizontal expansion */
+/* Updated textarea styling:
+   - Forces text wrapping and restricts horizontal expansion
+   - Sets font-size to 16px to avoid auto-zoom on mobile browsers */
 .translator-section textarea.form-control {
   min-height: 250px;
   white-space: pre-wrap;       /* Allow text to wrap preserving whitespace */
@@ -76,6 +78,7 @@ html, body {
   width: 100%;                 /* Force full container width */
   max-width: 100%;             /* Prevent expanding beyond container */
   resize: vertical;            /* Allow vertical resizing only */
+  font-size: 16px;             /* Prevent mobile browsers from auto-zooming */
 }
 
 .translator-section .check-button-container {
@@ -139,7 +142,7 @@ html, body {
   color: white; /* White text for contrast */
 }
 
-/* Responsive adjustments */
+/* Responsive adjustments for mobile screens */
 @media (max-width: 767px) {
   .translator-section .textarea-container {
     margin-bottom: 15px; /* Added bottom margin for spacing on small screens */
@@ -148,4 +151,10 @@ html, body {
   .translator-section .delete-button .copy-button {
     top: 10px; /* Adjust position for smaller screens */
   }
+
+  /* Set a smaller minimum height for textareas on mobile devices */
+  .translator-section textarea.form-control {
+    min-height: 150px; /* Adjust this value as needed */
+  }
 }
+
