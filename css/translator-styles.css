@@ -152,9 +152,12 @@ html, body {
     top: 10px; /* Adjust position for smaller screens */
   }
 
-  /* Set a smaller minimum height for textareas on mobile devices */
-  .translator-section textarea.form-control {
-    min-height: 150px; /* Adjust this value as needed */
+  /* Set different minimum heights for input and output textareas on mobile */
+  .translator-section #inputText {
+    min-height: 150px; /* Input textarea min-height on mobile */
+  }
+  .translator-section #outputText {
+    min-height: 100px; /* Output textarea min-height on mobile */
   }
 }
 
