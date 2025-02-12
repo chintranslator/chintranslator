@@ -154,10 +154,10 @@ html, body {
 
   /* Set different minimum heights for input and output textareas on mobile */
   .translator-section #inputText {
-    min-height: 150px; /* Input textarea min-height on mobile */
+    min-height: 100px; /* Input textarea min-height on mobile */
   }
   .translator-section #outputText {
-    min-height: 100px; /* Output textarea min-height on mobile */
+    min-height: 75px; /* Output textarea min-height on mobile */
   }
 }
 
