@@ -67,12 +67,15 @@ html, body {
   border-radius: 5px;
 }
 
-/* Updated textarea styling to force text wrapping */
+/* Updated textarea styling to force text wrapping and restrict horizontal expansion */
 .translator-section textarea.form-control {
   min-height: 250px;
   white-space: pre-wrap;       /* Allow text to wrap preserving whitespace */
   word-wrap: break-word;       /* Legacy support */
   overflow-wrap: break-word;   /* Modern browsers */
+  width: 100%;                 /* Force full container width */
+  max-width: 100%;             /* Prevent expanding beyond container */
+  resize: vertical;            /* Allow vertical resizing only */
 }
 
 .translator-section .check-button-container {
