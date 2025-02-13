@@ -39,6 +39,10 @@ html, body {
 
 .translator-section #outputText {
   color: SteelBlue;
+  background-color: #e8ebeb; /* A light grey background */
+  border: 1px solid #ced4da; /* A subtle border */
+  /*color: #495057;            /* A darker grey for the text */
+  cursor: default;      
 }
 
 .translator-section .delete-button {
