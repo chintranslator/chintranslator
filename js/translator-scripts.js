@@ -36,6 +36,9 @@ $(document).ready(function(){
 
   // Existing translation button click logic with an updated word count check
   $("#translateButton").click(function(){
+    // Clear previous output as soon as the button is clicked.
+    $("#outputText").val('');
+
     var sentence = $("#inputText").val().trim();
     // The select now returns FLM or ENG (matching the API language codes)
     var translationDirection = $("#translationDirection").val();
@@ -116,3 +119,4 @@ $(document).ready(function(){
     document.execCommand("copy");
   });
 });
+
