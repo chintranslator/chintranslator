@@ -85,7 +85,7 @@ $(document).ready(function(){
           $("#errorModal").modal("show");
           $("#outputText").val("");
         } else {
-          $("#outputText").val(data.translated_sentence);
+          $("#outputText").val(data.translated_text);
         }
         // Hide processing message and spinner
         processingMessage.hide();
