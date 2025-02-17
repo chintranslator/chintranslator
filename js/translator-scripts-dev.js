@@ -1,6 +1,6 @@
 $(document).ready(function(){
   // Maximum allowed words
-  var maxWords = 250;
+  var maxWords = 50;
 
   // Ensure a word count display element exists in the input container
   if ($("#wordCount").length === 0) {
@@ -36,6 +36,9 @@ $(document).ready(function(){
 
   // Existing translation button click logic with an updated word count check
   $("#translateButton").click(function(){
+    // Clear previous output as soon as the button is clicked.
+    $("#outputText").val('');
+
     var sentence = $("#inputText").val().trim();
     // The select now returns FLM or ENG (matching the API language codes)
     // Get translation direction from the toggle group (FLM or ENG)
