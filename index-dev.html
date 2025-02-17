@@ -44,7 +44,7 @@
   <script src="vendor/modernizr/modernizr.min.js"></script>
   
   <!-- Detector Specific CSS (Translator Styles) -->
-  <link rel="stylesheet" href="css/translator-styles.css">
+  <link rel="stylesheet" href="css/translator-styles-dev.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   
   <!-- Custom Translator Section CSS -->
@@ -147,12 +147,9 @@
                 <a href="https://www.facebook.com/ChinInfoTech" target="_blank" rel="noopener noreferrer" style="margin-left: 5px; color:#007BFF; text-decoration:none;">
                   <i class="fab fa-facebook"></i>
                 </a>
-                
               </div>
-              
             </div>
           </div>
-
         </div>
       </section>
 
@@ -160,14 +157,16 @@
       <div class="container pt-4">
         <div class="translator-section">
           <div class="container">
-            <!-- Removed the "Falam-English Translator" title block -->
-            <!-- Translation Direction Selection -->
+            <!-- Translation Direction Selection (Toggle) -->
             <div class="row mt-2">
-              <div class="col-md-6 offset-md-3">
-                <select class="form-control" id="translationDirection">
-                  <option value="FLM">Falam to English</option>
-                  <option value="ENG">English to Falam</option>
-                </select>
+              <div class="col-md-6 offset-md-3 text-center">
+                <div class="translator-toggle-group">
+                  <input type="radio" id="toggle-flam-eng" name="translationToggle" value="FLM" checked>
+                  <label for="toggle-flam-eng">Falam → English</label>
+                  
+                  <input type="radio" id="toggle-eng-flam" name="translationToggle" value="ENG">
+                  <label for="toggle-eng-flam">English → Falam</label>
+                </div>
               </div>
             </div>
             <!-- Translation Mode Selection -->
@@ -225,7 +224,6 @@
               </span>
             </p>
           </div>
-          
           
           <!-- Credits -->
           <div class="container text-center mt-3">
@@ -376,10 +374,12 @@
     <script src="js/theme.init.js"></script>
     
     <!-- Translator Script (AJAX logic for translation) -->
-    <script src="js/translator-scripts-cpu.js"></script>
+    <script src="js/translator-scripts-dev.js"></script>
   </div>
 </body>
 </html>
+
+
 
 
 
