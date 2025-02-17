@@ -38,7 +38,8 @@ $(document).ready(function(){
   $("#translateButton").click(function(){
     var sentence = $("#inputText").val().trim();
     // The select now returns FLM or ENG (matching the API language codes)
-    var translationDirection = $("#translationDirection").val();
+    // Get translation direction from the toggle group (FLM or ENG)
+    var translationDirection = $("input[name='translationToggle']:checked").val();
     // Get the selected translation mode (short or long; long is default)
     var translationMode = $("input[name='translationMode']:checked").val();
     var processingMessage = $(".processing-message");
