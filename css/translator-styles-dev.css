@@ -1,0 +1,234 @@
+/* Prevent horizontal overflow on the entire page */
+html, body {
+  overflow-x: hidden;
+}
+
+.translator-section {
+  margin-top: -50px; /* Adjust as needed */
+}
+
+.translator-section h3 {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.translator-section .textarea-container {
+  position: relative;
+  background-color: #fff;
+  border: 1px solid #D4D9DF;
+  border-radius: 4px;
+  padding: 15px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.translator-section body {
+  background-color: #F5F7FA;
+  color: #333;
+}
+
+.translator-section .title-color {
+  color: #5D92F4;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.translator-section #notify {
+  color: steelblue;
+}
+
+.translator-section #outputText {
+  color: SteelBlue;
+  background-color: #e8ebeb;
+  border: 1px solid #ced4da;
+  cursor: default;      
+}
+
+.translator-section .delete-button {
+  position: absolute;
+  top: 40px;
+  right: 10px;
+  margin-top: 10px;
+  color: #D9534F;
+}
+
+.translator-section .copy-button {
+  position: absolute;
+  top: 40px;
+  right: 10px;
+  margin-top: 10px;
+  color: lightseagreen;
+}
+
+/* Updated Box Headers (normal sentence case) */
+.translator-section .box-header {
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: center;
+  background-color: #5D92F4;
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  text-transform: none; /* Disable uppercase transformation */
+}
+
+.translator-section textarea.form-control {
+  min-height: 250px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 100%;
+  max-width: 100%;
+  resize: vertical;
+  font-size: 16px;
+}
+
+.translator-section .check-button-container {
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.translator-section .check-button {
+  width: 150px;
+  background-color: #5D92F4;
+  color: #fff;
+}
+
+.translator-section .processing-message {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.translator-section .spinner {
+  margin: 0 auto;
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #5D92F4;
+  border-radius: 50%;
+  animation: spin 1s ease-in-out infinite;
+}
+
+.translator-section .error-message {
+  color: red;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* CSS for Error Modal */
+.translator-section .modal-content {
+  color: #333;
+  background-color: #e3f2fd;
+}
+
+.translator-section .modal-header {
+  border-bottom-color: #bbdefb;
+}
+
+.translator-section .modal-footer {
+  border-top-color: #bbdefb;
+}
+
+.translator-section .btn-secondary {
+  background-color: #90caf9;
+  color: white;
+}
+
+/* Responsive adjustments for mobile screens */
+@media (max-width: 767px) {
+  .translator-section .textarea-container {
+    margin-bottom: 15px;
+  }
+
+  .translator-section #inputText {
+    min-height: 100px;
+  }
+  .translator-section #outputText {
+    min-height: 75px;
+  }
+  
+  /* Adjust Translator Toggle Group for mobile */
+  .translator-toggle-group {
+    max-width: 90%;
+    margin: 7px auto;
+  }
+  .translator-toggle-group label {
+    padding: 4px 8px;
+    font-size: 13px;
+    white-space: nowrap;  /* Prevent text wrapping */
+    line-height: 1.0;
+  }
+  .translator-toggle-group input[type="radio"]:checked + label::after {
+    right: 4px;
+    font-size: 10px;
+  }
+}
+
+/* Translator Toggle Group Styles (default) */
+.translator-toggle-group {
+  display: inline-flex;
+  border: 2px solid #5D92F4;
+  border-radius: 30px;
+  overflow: hidden;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.translator-toggle-group input[type="radio"] {
+  display: none;
+}
+
+.translator-toggle-group label {
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: #5D92F4;
+  position: relative;
+  transition: all 0.3s ease;
+  flex: 1;
+  text-align: center;
+}
+
+.translator-toggle-group label:not(:last-child) {
+  border-right: 2px solid #5D92F4;
+}
+
+.translator-toggle-group input[type="radio"]:checked + label {
+  background-color: #5D92F4;
+  color: #fff;
+}
+
+.translator-toggle-group input[type="radio"]:checked + label::after {
+  content: "\2713";
+  position: absolute;
+  right: 10px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.copy-feedback {
+  position: absolute;
+  top: 40px;           /* same vertical alignment as the copy button */
+  margin-top: 10px;
+  right: 60px;         /* adjust this value so the feedback appears immediately to the left of the copy button */
+  padding: 4px 8px;
+  border: 1px solid #828a84;  /* greenish border */
+  border-radius: 3px;
+  background-color: #c1c4c4;  /* light green background */
+  color: #008080;           
+  font-size: 14px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;  /* stylish font */
+  font-style: italic;         /* adds a subtle stylistic touch */
+}
