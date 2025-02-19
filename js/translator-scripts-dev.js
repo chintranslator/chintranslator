@@ -75,7 +75,7 @@ $(document).ready(function(){
     $.ajax({
       type: "POST",
       // Cloud Function endpoint that proxies to Cloud Run
-      url: "https://asia-southeast2-chintranslator.cloudfunctions.net/chintranslator-cpu-proxy",
+      url: "https://chintranslator-proxy-575463385612.asia-southeast2.run.app",
       data: JSON.stringify({
         text: sentence,
         lang: translationDirection, // FLM or ENG
