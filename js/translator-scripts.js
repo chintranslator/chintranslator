@@ -1,6 +1,6 @@
 $(document).ready(function(){
   // Maximum allowed words
-  var maxWords = 30;
+  var maxWords = 50;
 
   // Ensure a word count display element exists in the input container
   if ($("#wordCount").length === 0) {
@@ -41,7 +41,8 @@ $(document).ready(function(){
 
     var sentence = $("#inputText").val().trim();
     // The select now returns FLM or ENG (matching the API language codes)
-    var translationDirection = $("#translationDirection").val();
+    // Get translation direction from the toggle group (FLM or ENG)
+    var translationDirection = $("input[name='translationToggle']:checked").val();
     // Get the selected translation mode (short or long; long is default)
     var translationMode = $("input[name='translationMode']:checked").val();
     var processingMessage = $(".processing-message");
@@ -74,7 +75,7 @@ $(document).ready(function(){
     $.ajax({
       type: "POST",
       // Cloud Function endpoint that proxies to Cloud Run
-      url: "https://asia-southeast1-chintranslator.cloudfunctions.net/chintranslator-proxy",
+      url: "https://chintranslator-proxy-575463385612.asia-southeast2.run.app",
       data: JSON.stringify({
         text: sentence,
         lang: translationDirection, // FLM or ENG
@@ -88,7 +89,7 @@ $(document).ready(function(){
           $("#errorModal").modal("show");
           $("#outputText").val("");
         } else {
-          $("#outputText").val(data.translated_sentence);
+          $("#outputText").val(data.translated_text);
         }
         // Hide processing message and spinner
         processingMessage.hide();
@@ -111,12 +112,60 @@ $(document).ready(function(){
     $("#wordCount").text("0/" + maxWords);
   });
 
-  // Copy button: select and copy output text
+  // Copy button: copy output text and show feedback
   $("#copyButton").click(function() {
-    var copyText = document.getElementById("outputText");
-    copyText.select();
-    copyText.setSelectionRange(0, 99999);  // For mobile devices
-    document.execCommand("copy");
+    var outputTextEl = $("#outputText");
+    var textToCopy = outputTextEl.val();
+    
+    if(navigator.clipboard && window.isSecureContext) {
+      // Use the modern Clipboard API
+      navigator.clipboard.writeText(textToCopy)
+        .then(function() {
+          showCopyFeedback();
+        })
+        .catch(function() {
+          fallbackCopy(textToCopy);
+        });
+    } else {
+      // Fallback method
+      fallbackCopy(textToCopy);
+    }
   });
-});
 
+  // Fallback function for older browsers
+  function fallbackCopy(text) {
+    var textarea = document.createElement("textarea");
+    textarea.value = text;
+    textarea.style.position = "fixed"; // Prevent scrolling to bottom
+    textarea.style.top = "0";
+    textarea.style.left = "0";
+    textarea.style.opacity = "0";
+    document.body.appendChild(textarea);
+    textarea.focus();
+    textarea.select();
+    
+    try {
+      var successful = document.execCommand("copy");
+      if(successful) {
+        showCopyFeedback();
+      } else {
+        alert("Unable to copy text.");
+      }
+    } catch(err) {
+      alert("Unable to copy text.");
+    }
+    document.body.removeChild(textarea);
+  }
+
+  // Function to display the "Copied!" feedback
+  function showCopyFeedback() {
+    var copyButton = $("#copyButton");
+    var feedback = $("<span class='copy-feedback'>COPIED!</span>");
+    copyButton.after(feedback);
+    setTimeout(function() {
+      feedback.fadeOut(100, function() {
+        $(this).remove();
+      });
+    }, 1500);
+  }
+});
