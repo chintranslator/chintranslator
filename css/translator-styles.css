@@ -8,8 +8,8 @@ html, body {
 }
 
 .translator-section h3 {
-  font-size: 20px; /* Adjust the size as needed */
-  font-weight: bold; /* Makes the text bold */
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .translator-section .textarea-container {
@@ -29,8 +29,8 @@ html, body {
 
 .translator-section .title-color {
   color: #5D92F4;
-  margin-top: 10px; /* Reduced top margin */
-  margin-bottom: 10px; /* Reduced bottom margin */
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .translator-section #notify {
@@ -39,9 +39,8 @@ html, body {
 
 .translator-section #outputText {
   color: SteelBlue;
-  background-color: #e8ebeb; /* A light grey background */
-  border: 1px solid #ced4da; /* A subtle border */
-  /*color: #495057;            /* A darker grey for the text */
+  background-color: #e8ebeb;
+  border: 1px solid #ced4da;
   cursor: default;      
 }
 
@@ -61,6 +60,7 @@ html, body {
   color: lightseagreen;
 }
 
+/* Updated Box Headers (normal sentence case) */
 .translator-section .box-header {
   font-weight: bold;
   margin-bottom: 5px;
@@ -69,20 +69,18 @@ html, body {
   color: #fff;
   padding: 5px;
   border-radius: 5px;
+  text-transform: none; /* Disable uppercase transformation */
 }
 
-/* Updated textarea styling:
-   - Forces text wrapping and restricts horizontal expansion
-   - Sets font-size to 16px to avoid auto-zoom on mobile browsers */
 .translator-section textarea.form-control {
   min-height: 250px;
-  white-space: pre-wrap;       /* Allow text to wrap preserving whitespace */
-  word-wrap: break-word;       /* Legacy support */
-  overflow-wrap: break-word;   /* Modern browsers */
-  width: 100%;                 /* Force full container width */
-  max-width: 100%;             /* Prevent expanding beyond container */
-  resize: vertical;            /* Allow vertical resizing only */
-  font-size: 16px;             /* Prevent mobile browsers from auto-zooming */
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  width: 100%;
+  max-width: 100%;
+  resize: vertical;
+  font-size: 16px;
 }
 
 .translator-section .check-button-container {
@@ -129,39 +127,108 @@ html, body {
 
 /* CSS for Error Modal */
 .translator-section .modal-content {
-  color: #333; /* Dark grey */
-  background-color: #e3f2fd; /* Light Blue */
+  color: #333;
+  background-color: #e3f2fd;
 }
 
 .translator-section .modal-header {
-  border-bottom-color: #bbdefb; /* Medium Blue */
+  border-bottom-color: #bbdefb;
 }
 
 .translator-section .modal-footer {
-  border-top-color: #bbdefb; /* Medium Blue */
+  border-top-color: #bbdefb;
 }
 
 .translator-section .btn-secondary {
-  background-color: #90caf9; /* Darker Blue */
-  color: white; /* White text for contrast */
+  background-color: #90caf9;
+  color: white;
 }
 
 /* Responsive adjustments for mobile screens */
 @media (max-width: 767px) {
   .translator-section .textarea-container {
-    margin-bottom: 15px; /* Added bottom margin for spacing on small screens */
+    margin-bottom: 15px;
   }
 
-  .translator-section .delete-button .copy-button {
-    top: 10px; /* Adjust position for smaller screens */
-  }
-
-  /* Set different minimum heights for input and output textareas on mobile */
   .translator-section #inputText {
-    min-height: 100px; /* Input textarea min-height on mobile */
+    min-height: 100px;
   }
   .translator-section #outputText {
-    min-height: 75px; /* Output textarea min-height on mobile */
+    min-height: 75px;
+  }
+  
+  /* Adjust Translator Toggle Group for mobile */
+  .translator-toggle-group {
+    max-width: 90%;
+    margin: 7px auto;
+  }
+  .translator-toggle-group label {
+    padding: 4px 8px;
+    font-size: 13px;
+    white-space: nowrap;  /* Prevent text wrapping */
+    line-height: 1.0;
+  }
+  .translator-toggle-group input[type="radio"]:checked + label::after {
+    right: 4px;
+    font-size: 10px;
   }
 }
 
+/* Translator Toggle Group Styles (default) */
+.translator-toggle-group {
+  display: inline-flex;
+  border: 2px solid #5D92F4;
+  border-radius: 30px;
+  overflow: hidden;
+  margin: 10px 0;
+  width: 100%;
+}
+
+.translator-toggle-group input[type="radio"] {
+  display: none;
+}
+
+.translator-toggle-group label {
+  padding: 10px 20px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: #5D92F4;
+  position: relative;
+  transition: all 0.3s ease;
+  flex: 1;
+  text-align: center;
+}
+
+.translator-toggle-group label:not(:last-child) {
+  border-right: 2px solid #5D92F4;
+}
+
+.translator-toggle-group input[type="radio"]:checked + label {
+  background-color: #5D92F4;
+  color: #fff;
+}
+
+.translator-toggle-group input[type="radio"]:checked + label::after {
+  content: "\2713";
+  position: absolute;
+  right: 10px;
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.copy-feedback {
+  position: absolute;
+  top: 40px;           /* same vertical alignment as the copy button */
+  margin-top: 10px;
+  right: 60px;         /* adjust this value so the feedback appears immediately to the left of the copy button */
+  padding: 4px 8px;
+  border: 1px solid #828a84;  /* greenish border */
+  border-radius: 3px;
+  background-color: #c1c4c4;  /* light green background */
+  color: #008080;           
+  font-size: 14px;
+  text-align: center;
+  font-family: 'Poppins', sans-serif;  /* stylish font */
+  font-style: italic;         /* adds a subtle stylistic touch */
+}
