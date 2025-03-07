@@ -83,7 +83,7 @@ $(document).ready(function(){
     $("#audioButton").hide().removeClass("blinking audio-ready").off("click");
   }
   
-  // Translation button click logic
+// Translation button click logic
   $("#translateButton").click(function(){
     $("#outputText").val('');
     clearAudioState();
@@ -119,21 +119,24 @@ $(document).ready(function(){
     
     // Determine if audio is requested and get voice option if so
     var audioRequested = $("#audioToggle").is(":checked");
-    var audioOption = null;
+    
+    // Build the payload object
+    var payload = {
+      text: sentence,
+      lang: translationDirection,
+      mode: translationMode,
+      audio: audioRequested
+    };
+    
+    // Only include audio_option if audio is requested
     if (audioRequested) {
-      audioOption = $("input[name='voiceOption']:checked").val();
+      payload.audio_option = $("input[name='voiceOption']:checked").val();
     }
     
     $.ajax({
       type: "POST",
       url: "https://chintranslator-cloudfunction-575463385612.asia-southeast1.run.app/translate",
-      data: JSON.stringify({
-        text: sentence,
-        lang: translationDirection,
-        mode: translationMode,
-        audio: audioRequested,
-        audio_option: audioOption
-      }),
+      data: JSON.stringify(payload),
       contentType: "application/json",
       dataType: "json",
       success: function(data) {
@@ -159,6 +162,7 @@ $(document).ready(function(){
       }
     });
   });
+
   
   // Delete button: clear input, output, word count, and audio state
   $("#deleteButton").click(function() {
