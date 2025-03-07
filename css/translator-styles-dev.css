@@ -44,20 +44,24 @@ html, body {
   cursor: default;
 }
 
-.translator-section .delete-button {
-  position: absolute;
-  top: 40px;
-  right: 10px;
-  margin-top: 10px;
-  color: #D9534F;
-}
-
+/* Positioning for Copy and Audio Buttons */
 .translator-section .copy-button {
   position: absolute;
   top: 40px;
   right: 10px;
   margin-top: 10px;
   color: lightseagreen;
+}
+
+.translator-section .audio-button {
+  position: absolute;
+  top: 80px; /* Positioned just below the copy button */
+  right: 10px;
+  margin-top: 10px;
+  background-color: #ffc107;  /* Yellowish background */
+  border: 1px solid #ffc107;
+  color: #fff;
+  display: none;  /* Hidden by default */
 }
 
 /* Updated Box Headers */
@@ -327,8 +331,11 @@ html, body {
   100% { opacity: 1; }
 }
 
-.blinking {
+.audio-button.blinking {
   animation: blinking 1s infinite;
+  background-color: #ffc107 !important; /* Yellowish while blinking */
+  border-color: #ffc107 !important;
+  color: #fff !important;
 }
 
 .audio-ready {
