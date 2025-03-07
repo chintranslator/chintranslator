@@ -247,8 +247,11 @@ $(document).ready(function(){
             audioButton.off("click").on("click", function(){
               var audioElement = document.getElementById("audioPlayer");
               audioElement.src = statusData.audio_url;
-              audioElement.play();
-            });
+              audioElement.load(); // Ensure the new source is loaded
+              audioElement.play().catch(function(error) {
+                console.error("Playback error:", error);
+              });
+            });            
             clearInterval(pollTimer);
           } else if (statusData.status === "failed") {
             console.error("Audio generation failed.");
