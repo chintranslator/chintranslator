@@ -47,15 +47,15 @@ $(document).ready(function(){
     var voiceOptionsContainer = $("#voiceOptions");
     voiceOptionsContainer.empty();
     if (translationDirection === "FLM") {
-      // When input is FLM, output is English → options: ENG[F] (default), ENG[M], US[M]
+      // When input is FLM, output is English → options: ENG[F] (default), ENG[M], US[F]
       voiceOptionsContainer.append(
         '<div class="voice-toggle-group">' +
           '<input type="radio" name="voiceOption" id="voice_ENG_F" value="audio_eng_female" checked>' +
           '<label for="voice_ENG_F">ENG[F]</label>' +
           '<input type="radio" name="voiceOption" id="voice_ENG_M" value="audio_eng_male">' +
           '<label for="voice_ENG_M">ENG[M]</label>' +
-          '<input type="radio" name="voiceOption" id="voice_US_M" value="audio_american_male">' +
-          '<label for="voice_US_M">US[M]</label>' +
+          '<input type="radio" name="voiceOption" id="voice_US_F" value="audio_american_female">' +
+          '<label for="voice_US_F">US[F]</label>' +
         '</div>'
       );
     } else {
@@ -83,7 +83,7 @@ $(document).ready(function(){
     $("#audioButton").hide().removeClass("blinking audio-ready").off("click");
   }
   
-// Translation button click logic
+  // Translation button click logic
   $("#translateButton").click(function(){
     $("#outputText").val('');
     clearAudioState();
@@ -162,7 +162,6 @@ $(document).ready(function(){
       }
     });
   });
-
   
   // Delete button: clear input, output, word count, and audio state
   $("#deleteButton").click(function() {
@@ -233,7 +232,7 @@ $(document).ready(function(){
   
   // Poll for audio status using the request_id
   function pollForAudio(requestId) {
-    var pollInterval = 3000; // 5000 (5 seconds)
+    var pollInterval = 3000; // 3000 ms (3 seconds)
     var pollAudioStatus = function() {
       $.ajax({
         type: "GET",
@@ -265,5 +264,6 @@ $(document).ready(function(){
     var pollTimer = setInterval(pollAudioStatus, pollInterval);
   }
 });
+
 
 
