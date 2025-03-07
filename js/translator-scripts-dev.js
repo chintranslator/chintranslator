@@ -4,7 +4,6 @@ $(document).ready(function(){
 
   // Ensure a word count display element exists in the input container
   if ($("#wordCount").length === 0) {
-    // Append it to the first .textarea-container that holds the input (adjust if necessary)
     $("#inputText").closest(".textarea-container").append(
       '<div id="wordCount" style="position:absolute; bottom:15px; right:20px; font-size:0.8em; color:#999;">0/' + maxWords + '</div>'
     );
@@ -13,14 +12,11 @@ $(document).ready(function(){
   // Function to update the word count display
   function updateWordCount() {
     var text = $("#inputText").val();
-    // Use a regex to split by whitespace and filter out empty strings
     var words = text.trim().split(/\s+/).filter(function(word) {
       return word.length > 0;
     });
     var count = words.length;
     $("#wordCount").text(count + "/" + maxWords);
-
-    // If the count exceeds maxWords, trim the text and alert the user
     if(count > maxWords) {
       var trimmedWords = words.slice(0, maxWords);
       $("#inputText").val(trimmedWords.join(" "));
@@ -28,58 +24,115 @@ $(document).ready(function(){
       alert("Maximum word limit reached (" + maxWords + " words). Please shorten your text.");
     }
   }
-
-  // Bind the input event to update the count as the user types
+  
   $("#inputText").on("input", function(){
     updateWordCount();
   });
-
-  // Existing translation button click logic with an updated word count check
-  $("#translateButton").click(function(){
-    // Clear previous output as soon as the button is clicked.
-    $("#outputText").val('');
-
-    var sentence = $("#inputText").val().trim();
-    // The select now returns FLM or ENG (matching the API language codes)
-    // Get translation direction from the toggle group (FLM or ENG)
+  
+  // Toggle for Generate Audio using iOS-style toggle
+  $("#audioToggle").change(function(){
+    console.log("Audio toggle changed. Checked?", $(this).is(":checked")); // Debug log
+    if ($(this).is(":checked")) {
+      $("#voiceSelectionContainer").slideDown();
+      populateVoiceOptions();
+    } else {
+      $("#voiceSelectionContainer").slideUp();
+    }
+  });
+  
+  // Function to populate voice options based on translation direction
+  function populateVoiceOptions(){
     var translationDirection = $("input[name='translationToggle']:checked").val();
-    // Get the selected translation mode (short or long; long is default)
+    console.log("Populating voice options for translation direction:", translationDirection); // Debug log
+    var voiceOptionsContainer = $("#voiceOptions");
+    voiceOptionsContainer.empty();
+    if (translationDirection === "FLM") {
+      // When input is FLM, output is English → options: ENG[F] (default), ENG[M], US[M]
+      voiceOptionsContainer.append(
+        '<div class="voice-toggle-group">' +
+          '<input type="radio" name="voiceOption" id="voice_ENG_F" value="audio_eng_female" checked>' +
+          '<label for="voice_ENG_F">ENG[F]</label>' +
+          '<input type="radio" name="voiceOption" id="voice_ENG_M" value="audio_eng_male">' +
+          '<label for="voice_ENG_M">ENG[M]</label>' +
+          '<input type="radio" name="voiceOption" id="voice_US_M" value="audio_american_male">' +
+          '<label for="voice_US_M">US[M]</label>' +
+        '</div>'
+      );
+    } else {
+      // When input is ENG, output is Falam → options: FLM[F] (default), FLM[M]
+      voiceOptionsContainer.append(
+        '<div class="voice-toggle-group">' +
+          '<input type="radio" name="voiceOption" id="voice_FLM_F" value="audio_flm_female" checked>' +
+          '<label for="voice_FLM_F">FLM[F]</label>' +
+          '<input type="radio" name="voiceOption" id="voice_FLM_M" value="audio_flm_male">' +
+          '<label for="voice_FLM_M">FLM[M]</label>' +
+        '</div>'
+      );
+    }
+  }
+  
+  // Update voice options when translation direction changes
+  $("input[name='translationToggle']").change(function(){
+    if ($("#audioToggle").is(":checked")) {
+      populateVoiceOptions();
+    }
+  });
+  
+  // Clear audio state function (hide audio button)
+  function clearAudioState(){
+    $("#audioButton").hide().removeClass("blinking audio-ready").off("click");
+  }
+  
+  // Translation button click logic
+  $("#translateButton").click(function(){
+    $("#outputText").val('');
+    clearAudioState();
+    
+    var sentence = $("#inputText").val().trim();
+    var translationDirection = $("input[name='translationToggle']:checked").val();
     var translationMode = $("input[name='translationMode']:checked").val();
     var processingMessage = $(".processing-message");
     var spinner = $(".spinner");
-
-    // Check word count on submit
+    
     var words = sentence.split(/\s+/).filter(function(word) {
       return word.length > 0;
     });
-
+    
     if (words.length > maxWords) {
       alert("Please shorten your input to " + maxWords + " words. Your current word count is " + words.length + ".");
       return;
     }
-
+    
     if (words.length < 3) {
       alert("Please enter 3 or more words. Your current word count is " + words.length + ".");
       return;
     }
-
+    
     if (sentence.length === 0) {
       alert("Please enter some text.");
       return;
     }
-
+    
     // Show processing message and spinner
     processingMessage.show();
     spinner.addClass("spin");
-
+    
+    // Determine if audio is requested and get voice option if so
+    var audioRequested = $("#audioToggle").is(":checked");
+    var audioOption = null;
+    if (audioRequested) {
+      audioOption = $("input[name='voiceOption']:checked").val();
+    }
+    
     $.ajax({
       type: "POST",
-      // Cloud Function endpoint that proxies to Cloud Run
-      url: "https://chintranslator-proxy-575463385612.asia-southeast2.run.app",
+      url: "https://chintranslator-cloudfunction-575463385612.asia-southeast1.run.app",
       data: JSON.stringify({
         text: sentence,
-        lang: translationDirection, // FLM or ENG
-        mode: translationMode         // short or long
+        lang: translationDirection,
+        mode: translationMode,
+        audio: audioRequested,
+        audio_option: audioOption
       }),
       contentType: "application/json",
       dataType: "json",
@@ -90,35 +143,36 @@ $(document).ready(function(){
           $("#outputText").val("");
         } else {
           $("#outputText").val(data.translated_text);
+          if (data.request_id) {
+            setupAudioButton(data.request_id);
+            pollForAudio(data.request_id);
+          }
         }
-        // Hide processing message and spinner
         processingMessage.hide();
         spinner.removeClass("spin");
       },
       error: function(err) {
         console.log(err);
         alert("There was an error. Try again later.");
-        // Hide processing message and spinner
         processingMessage.hide();
         spinner.removeClass("spin");
       }
     });
   });
-
-  // Delete button: clear the input, output, and reset word count display
+  
+  // Delete button: clear input, output, word count, and audio state
   $("#deleteButton").click(function() {
     $("#inputText").val('');
     $("#outputText").val('');
     $("#wordCount").text("0/" + maxWords);
+    clearAudioState();
   });
-
+  
   // Copy button: copy output text and show feedback
   $("#copyButton").click(function() {
     var outputTextEl = $("#outputText");
     var textToCopy = outputTextEl.val();
-    
     if(navigator.clipboard && window.isSecureContext) {
-      // Use the modern Clipboard API
       navigator.clipboard.writeText(textToCopy)
         .then(function() {
           showCopyFeedback();
@@ -127,23 +181,20 @@ $(document).ready(function(){
           fallbackCopy(textToCopy);
         });
     } else {
-      // Fallback method
       fallbackCopy(textToCopy);
     }
   });
-
-  // Fallback function for older browsers
+  
   function fallbackCopy(text) {
     var textarea = document.createElement("textarea");
     textarea.value = text;
-    textarea.style.position = "fixed"; // Prevent scrolling to bottom
+    textarea.style.position = "fixed";
     textarea.style.top = "0";
     textarea.style.left = "0";
     textarea.style.opacity = "0";
     document.body.appendChild(textarea);
     textarea.focus();
     textarea.select();
-    
     try {
       var successful = document.execCommand("copy");
       if(successful) {
@@ -156,8 +207,7 @@ $(document).ready(function(){
     }
     document.body.removeChild(textarea);
   }
-
-  // Function to display the "Copied!" feedback
+  
   function showCopyFeedback() {
     var copyButton = $("#copyButton");
     var feedback = $("<span class='copy-feedback'>COPIED!</span>");
@@ -168,4 +218,48 @@ $(document).ready(function(){
       });
     }, 1500);
   }
+  
+  // Audio button setup: show button in blinking state (disabled)
+  function setupAudioButton(requestId) {
+    var audioButton = $("#audioButton");
+    audioButton.show();
+    audioButton.addClass("blinking");
+    audioButton.prop("disabled", true);
+  }
+  
+  // Poll for audio status using the request_id
+  function pollForAudio(requestId) {
+    var pollInterval = 3000; // 5 seconds
+    var pollAudioStatus = function() {
+      $.ajax({
+        type: "GET",
+        url: "https://chintranslator-proxy-575463385612.asia-southeast2.run.app/audio_status",
+        data: { request_id: requestId },
+        dataType: "json",
+        success: function(statusData) {
+          if (statusData.status === "completed") {
+            var audioButton = $("#audioButton");
+            audioButton.removeClass("blinking").addClass("audio-ready");
+            audioButton.prop("disabled", false);
+            audioButton.off("click").on("click", function(){
+              var audioElement = document.getElementById("audioPlayer");
+              audioElement.src = statusData.audio_url;
+              audioElement.play();
+            });
+            clearInterval(pollTimer);
+          } else if (statusData.status === "failed") {
+            console.error("Audio generation failed.");
+            $("#audioButton").hide();
+            clearInterval(pollTimer);
+          }
+        },
+        error: function(err) {
+          console.log("Error polling audio status:", err);
+        }
+      });
+    };
+    var pollTimer = setInterval(pollAudioStatus, pollInterval);
+  }
 });
+
+
