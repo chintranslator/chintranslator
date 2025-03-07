@@ -43,11 +43,10 @@
   <!-- Head Libs -->
   <script src="vendor/modernizr/modernizr.min.js"></script>
   
-  <!-- Detector Specific CSS (Translator Styles) -->
+  <!-- Translator Specific CSS -->
   <link rel="stylesheet" href="css/translator-styles.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   
-  <!-- Custom Translator Section CSS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
   <div class="body">
@@ -117,7 +116,6 @@
             </div>
             <div class="header-column justify-content-end">
               <div class="header-row">
-                <!-- Updated Contact Us link -->
                 <a href="https://chinlandinfo.org/contact-us.html" class="btn btn-modern btn-primary btn-outline btn-arrow-effect-1 text-capitalize text-2-5 ms-3 me-2 d-block d-md-none d-xl-block anim-hover-translate-right-5px transition-2ms">
                   Contact Us <i class="fas fa-arrow-right ms-2"></i>
                 </a>
@@ -135,10 +133,7 @@
         <div class="container">
           <div class="row py-3">
             <div class="col-md-8 order-2 order-md-1 align-self-center p-static">
-              <!-- Updated heading with smaller powered-by text -->
-              <h1 class="text-color-dark font-weight-bold">
-                Chin Translator
-              </h1>
+              <h1 class="text-color-dark font-weight-bold">Chin Translator</h1>
               <div style="font-size:1.4em; font-family:'Poppins', sans-serif; color:#007BFF; margin-top: 5px;">
                 Powered by 
                 <a href="https://chinlandinfo.org" target="_blank" style="color:#007BFF; text-decoration:none;">
@@ -162,10 +157,10 @@
               <div class="col-md-6 offset-md-3 text-center">
                 <div class="translator-toggle-group">
                   <input type="radio" id="toggle-flam-eng" name="translationToggle" value="FLM" checked>
-                  <label for="toggle-flam-eng">Falam → English</label>
+                  <label for="toggle-flam-eng">Chin(FLM) → English</label>
                   
                   <input type="radio" id="toggle-eng-flam" name="translationToggle" value="ENG">
-                  <label for="toggle-eng-flam">English → Falam</label>
+                  <label for="toggle-eng-flam">English → Chin(FLM)</label>
                 </div>
               </div>
             </div>
@@ -180,6 +175,26 @@
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" type="radio" name="translationMode" id="modeLong" value="long">
                   <label class="form-check-label" for="modeLong">Long</label>
+                </div>
+              </div>
+            </div>
+            <!-- Audio Option Selection -->
+            <div class="row mt-3">
+              <div class="col-md-6 offset-md-3 text-center">
+                <!-- iOS-style Toggle for Generate Audio -->
+                <div class="audio-toggle-container">
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="audioToggle">
+                    <span class="slider"></span>
+                  </label>
+                  <span class="toggle-label">Generate Audio</span>
+                </div>
+                <!-- Voice selection options (hidden by default) -->
+                <div id="voiceSelectionContainer" style="display:none; margin-top:10px;">
+                  <label style="font-size:0.9em;">Voice:</label>
+                  <div id="voiceOptions">
+                    <!-- Voice options will be populated here in a rounded toggle group -->
+                  </div>
                 </div>
               </div>
             </div>
@@ -201,6 +216,10 @@
                     <p id="processingText">Translating...</p>
                   </div>
                   <button class="btn copy-button" id="copyButton" title="Copy Output"><i class="far fa-copy"></i></button>
+                  <!-- Audio button (initially hidden) placed under the Copy button -->
+                  <button class="btn audio-button" id="audioButton" title="Play Audio" style="display:none;"><i class="fas fa-volume-up"></i></button>
+                  <!-- Hidden audio element for playback -->
+                  <audio id="audioPlayer" style="display:none;"></audio>
                 </div>
               </div>
             </div>
@@ -211,7 +230,7 @@
               </div>
             </div>
           </div>
-          <!-- Feedback -->
+          <!-- Feedback and Credits Sections (unchanged) -->
           <div class="container text-center mt-3">
             <p style="font-size: 1.0em; color: #007BFF; background-color: rgba(0,123,255,0.1); display: inline-block; padding: 8px 16px; border-radius: 30px;">
               <i class="fas fa-comment-alt" style="margin-right: 5px;"></i>
@@ -224,8 +243,6 @@
               </span>
             </p>
           </div>
-          
-          <!-- Credits -->
           <div class="container text-center mt-3">
             <p class="text-muted">
               <medium>
@@ -303,7 +320,6 @@
       <div class="container pt-5 pb-3">
         <div class="row pt-5">
           <div class="col-lg-4">
-            <!-- Updated Footer Logo Link -->
             <a href="https://www.chinladinfo.com" class="text-decoration-none">
               <img src="img/chinlandinfo-logo-long-white.png" width="280" height="62" class="img-fluid mb-4" alt="ChinlandInfoTech" />
             </a>
@@ -341,7 +357,6 @@
               </li>
             </ul>
           </div>
-          <!-- Navigation portion removed from footer -->
         </div>
       </div>
       <div class="footer-copyright bg-transparent">
@@ -373,11 +388,13 @@
     <!-- Theme Initialization -->
     <script src="js/theme.init.js"></script>
     
-    <!-- Translator Script (AJAX logic for translation) -->
+    <!-- Translator Script (AJAX logic for translation and audio handling) -->
     <script src="js/translator-scripts.js"></script>
   </div>
 </body>
 </html>
+
+
 
 
 
