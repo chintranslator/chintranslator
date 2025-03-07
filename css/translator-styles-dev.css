@@ -66,7 +66,7 @@ html, body {
 .translator-section .audio-button {
   position: absolute;
   top: 80px; /* Positioned just below the copy button */
-  right: 15px; /* Aligned with the copy button */
+  right: 18px; /* Aligned with the copy button */
   margin-top: 10px;
   background-color: #ffc107;  /* Yellowish background */
   border: 1px solid #ffc107;
