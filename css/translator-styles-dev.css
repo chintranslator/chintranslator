@@ -1,9 +1,8 @@
-/* Prevent horizontal overflow on the entire page */
+/* Enforce a minimum horizontal width (320px) for mobile view */
 html, body {
   min-width: 320px;
   overflow-x: hidden;
 }
-
 
 .translator-section {
   margin-top: -50px; /* Adjust as needed */
@@ -46,11 +45,20 @@ html, body {
   cursor: default;
 }
 
+/* Delete Button */
+.translator-section .delete-button {
+  position: absolute;
+  top: 40px;
+  right: 10px;
+  margin-top: 10px;
+  color: #D9534F;
+}
+
 /* Positioning for Copy and Audio Buttons */
 .translator-section .copy-button {
   position: absolute;
   top: 40px;
-  right: 10px;
+  right: 60px; /* Adjusted to avoid overlap with delete button */
   margin-top: 10px;
   color: lightseagreen;
 }
@@ -58,7 +66,7 @@ html, body {
 .translator-section .audio-button {
   position: absolute;
   top: 80px; /* Positioned just below the copy button */
-  right: 15px;
+  right: 60px; /* Aligned with the copy button */
   margin-top: 10px;
   background-color: #ffc107;  /* Yellowish background */
   border: 1px solid #ffc107;
@@ -224,7 +232,7 @@ html, body {
 .copy-feedback {
   position: absolute;
   top: 40px;
-  right: 60px;
+  right: 120px;
   padding: 4px 8px;
   border: 1px solid #828a84;
   border-radius: 3px;
@@ -341,8 +349,9 @@ html, body {
 }
 
 .audio-ready {
-  background-color: green !important;
-  border-color: green !important;
+  background-color: #4CAF50  !important;
+  border-color: #4CAF50  !important;
   color: #fff !important;
 }
+
 
