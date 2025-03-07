@@ -41,7 +41,7 @@ html, body {
   color: SteelBlue;
   background-color: #e8ebeb;
   border: 1px solid #ced4da;
-  cursor: default;      
+  cursor: default;
 }
 
 .translator-section .delete-button {
@@ -60,7 +60,7 @@ html, body {
   color: lightseagreen;
 }
 
-/* Updated Box Headers (normal sentence case) */
+/* Updated Box Headers */
 .translator-section .box-header {
   font-weight: bold;
   margin-bottom: 5px;
@@ -69,7 +69,7 @@ html, body {
   color: #fff;
   padding: 5px;
   border-radius: 5px;
-  text-transform: none; /* Disable uppercase transformation */
+  text-transform: none;
 }
 
 .translator-section textarea.form-control {
@@ -125,7 +125,7 @@ html, body {
   100% { transform: rotate(360deg); }
 }
 
-/* CSS for Error Modal */
+/* Error Modal CSS */
 .translator-section .modal-content {
   color: #333;
   background-color: #e3f2fd;
@@ -149,15 +149,12 @@ html, body {
   .translator-section .textarea-container {
     margin-bottom: 15px;
   }
-
   .translator-section #inputText {
     min-height: 100px;
   }
   .translator-section #outputText {
     min-height: 75px;
   }
-  
-  /* Adjust Translator Toggle Group for mobile */
   .translator-toggle-group {
     max-width: 90%;
     margin: 7px auto;
@@ -165,7 +162,7 @@ html, body {
   .translator-toggle-group label {
     padding: 4px 8px;
     font-size: 13px;
-    white-space: nowrap;  /* Prevent text wrapping */
+    white-space: nowrap;
     line-height: 1.0;
   }
   .translator-toggle-group input[type="radio"]:checked + label::after {
@@ -174,7 +171,7 @@ html, body {
   }
 }
 
-/* Translator Toggle Group Styles (default) */
+/* Translator Toggle Group Styles */
 .translator-toggle-group {
   display: inline-flex;
   border: 2px solid #5D92F4;
@@ -217,18 +214,126 @@ html, body {
   font-weight: bold;
 }
 
+/* Copy Feedback */
 .copy-feedback {
   position: absolute;
-  top: 40px;           /* same vertical alignment as the copy button */
-  margin-top: 10px;
-  right: 60px;         /* adjust this value so the feedback appears immediately to the left of the copy button */
+  top: 40px;
+  right: 60px;
   padding: 4px 8px;
-  border: 1px solid #828a84;  /* greenish border */
+  border: 1px solid #828a84;
   border-radius: 3px;
-  background-color: #c1c4c4;  /* light green background */
-  color: #008080;           
+  background-color: #c1c4c4;
+  color: #008080;
   font-size: 14px;
   text-align: center;
-  font-family: 'Poppins', sans-serif;  /* stylish font */
-  font-style: italic;         /* adds a subtle stylistic touch */
+  font-family: 'Poppins', sans-serif;
+  font-style: italic;
 }
+
+/* iOS-style Toggle Switch for Generate Audio */
+.audio-toggle-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+  margin-right: 10px;
+}
+
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 22px;
+  width: 22px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+.toggle-switch input:checked + .slider {
+  background-color: #5D92F4;
+}
+
+.toggle-switch input:checked + .slider:before {
+  transform: translateX(22px);
+}
+
+.toggle-label {
+  font-size: 1em;
+  color: #5D92F4;
+}
+
+/* Voice Selection Options: Rounded Rectangle Design */
+.voice-toggle-group {
+  display: inline-flex;
+  border: 2px solid #5D92F4;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 5px auto;
+}
+
+.voice-toggle-group input[type="radio"] {
+  display: none;
+}
+
+.voice-toggle-group label {
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 0.9em;
+  color: #5D92F4;
+  transition: all 0.3s ease;
+  border-right: 1px solid #5D92F4;
+}
+
+.voice-toggle-group label:last-child {
+  border-right: none;
+}
+
+.voice-toggle-group input[type="radio"]:checked + label {
+  background-color: #5D92F4;
+  color: #fff;
+}
+
+/* Audio Button Blinking and Ready State */
+@keyframes blinking {
+  0% { opacity: 1; }
+  50% { opacity: 0.3; }
+  100% { opacity: 1; }
+}
+
+.blinking {
+  animation: blinking 1s infinite;
+}
+
+.audio-ready {
+  background-color: green !important;
+  border-color: green !important;
+  color: #fff !important;
+}
+
