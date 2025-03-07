@@ -47,19 +47,19 @@ $(document).ready(function(){
     var voiceOptionsContainer = $("#voiceOptions");
     voiceOptionsContainer.empty();
     if (translationDirection === "FLM") {
-      // When input is FLM, output is English → options: ENG[F] (default), ENG[M], US[F]
+      // For FLM input (output is English), display options in the order: US[F] (default), ENG[M], ENG[F]
       voiceOptionsContainer.append(
         '<div class="voice-toggle-group">' +
-          '<input type="radio" name="voiceOption" id="voice_ENG_F" value="audio_eng_female" checked>' +
-          '<label for="voice_ENG_F">ENG[F]</label>' +
+          '<input type="radio" name="voiceOption" id="voice_US_F" value="audio_american_female" checked>' +
+          '<label for="voice_US_F">US[F]</label>' +
           '<input type="radio" name="voiceOption" id="voice_ENG_M" value="audio_eng_male">' +
           '<label for="voice_ENG_M">ENG[M]</label>' +
-          '<input type="radio" name="voiceOption" id="voice_US_F" value="audio_american_female">' +
-          '<label for="voice_US_F">US[F]</label>' +
+          '<input type="radio" name="voiceOption" id="voice_ENG_F" value="audio_eng_female">' +
+          '<label for="voice_ENG_F">ENG[F]</label>' +
         '</div>'
       );
     } else {
-      // When input is ENG, output is Falam → options: FLM[F] (default), FLM[M]
+      // For ENG input (output is Falam), options remain unchanged
       voiceOptionsContainer.append(
         '<div class="voice-toggle-group">' +
           '<input type="radio" name="voiceOption" id="voice_FLM_F" value="audio_flm_female" checked>' +
@@ -70,6 +70,7 @@ $(document).ready(function(){
       );
     }
   }
+  
   
   // Update voice options when translation direction changes
   $("input[name='translationToggle']").change(function(){
