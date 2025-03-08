@@ -136,7 +136,7 @@ $(document).ready(function(){
     
     $.ajax({
       type: "POST",
-      url: "https://chintranslator-cloudfunction-575463385612.asia-southeast1.run.app/translate",
+      url: "https://chintranslator-router-575463385612.asia-southeast1.run.app/translate",
       data: JSON.stringify(payload),
       contentType: "application/json",
       dataType: "json",
@@ -237,7 +237,7 @@ $(document).ready(function(){
     var pollAudioStatus = function() {
       $.ajax({
         type: "GET",
-        url: "https://chintranslator-cloudfunction-575463385612.asia-southeast1.run.app/audio_status",
+        url: "https://chintranslator-router-575463385612.asia-southeast1.run.app/audio_status",
         data: { request_id: requestId },
         dataType: "json",
         success: function(statusData) {
