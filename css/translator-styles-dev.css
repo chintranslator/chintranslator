@@ -63,6 +63,7 @@ html, body {
   color: lightseagreen;
 }
 
+/* Updated Audio Button Styles using common class */
 .translator-section .audio-button {
   position: absolute;
   top: 80px; /* Positioned just below the copy button */
@@ -334,7 +335,7 @@ html, body {
   color: #fff;
 }
 
-/* Audio Button Blinking and Ready State */
+/* Audio Button Blinking and State Classes */
 @keyframes blinking {
   0% { opacity: 1; }
   50% { opacity: 0.3; }
@@ -348,10 +349,17 @@ html, body {
   color: #fff !important;
 }
 
-.audio-ready {
-  background-color: #4CAF50  !important;
-  border-color: #4CAF50  !important;
+.audio-button.audio-ready {
+  background-color: #4CAF50 !important;
+  border-color: #4CAF50 !important;
   color: #fff !important;
 }
+
+.audio-button.audio-failed {
+  background-color: red;
+  color: white;
+  /* Additional styling as needed */
+}
+
 
 
