@@ -71,7 +71,6 @@ $(document).ready(function(){
     }
   }
   
-  
   // Update voice options when translation direction changes
   $("input[name='translationToggle']").change(function(){
     if ($("#audioToggle").is(":checked")) {
@@ -81,7 +80,7 @@ $(document).ready(function(){
   
   // Clear audio state function (hide audio button)
   function clearAudioState(){
-    $("#audioButton").hide().removeClass("blinking audio-ready").off("click");
+    $(".audio-button").hide().removeClass("blinking audio-ready audio-failed").off("click");
   }
   
   // Translation button click logic
@@ -136,7 +135,7 @@ $(document).ready(function(){
     
     $.ajax({
       type: "POST",
-      url: "https://chintranslator-router-575463385612.asia-southeast1.run.app/translate",
+      url: "https://chintranslator-cloudfunction-575463385612.asia-southeast1.run.app/translate",
       data: JSON.stringify(payload),
       contentType: "application/json",
       dataType: "json",
@@ -225,7 +224,7 @@ $(document).ready(function(){
   
   // Audio button setup: show button in blinking state (disabled)
   function setupAudioButton(requestId) {
-    var audioButton = $("#audioButton");
+    var audioButton = $(".audio-button");
     audioButton.show();
     audioButton.addClass("blinking");
     audioButton.prop("disabled", true);
@@ -233,16 +232,20 @@ $(document).ready(function(){
   
   // Poll for audio status using the request_id
   function pollForAudio(requestId) {
-    var pollInterval = 3000; // 3000 ms (3 seconds)
+    var pollInterval = 3000; // 3 seconds
+    var maxAttempts = 20; // After 20 attempts (60 seconds), stop polling
+    var attemptCount = 0;
+    
     var pollAudioStatus = function() {
+      attemptCount++;
       $.ajax({
         type: "GET",
-        url: "https://chintranslator-router-575463385612.asia-southeast1.run.app/audio_status",
+        url: "https://chintranslator-cloudfunction-575463385612.asia-southeast1.run.app/audio_status",
         data: { request_id: requestId },
         dataType: "json",
         success: function(statusData) {
           if (statusData.status === "completed") {
-            var audioButton = $("#audioButton");
+            var audioButton = $(".audio-button");
             audioButton.removeClass("blinking").addClass("audio-ready");
             audioButton.prop("disabled", false);
             audioButton.off("click").on("click", function(){
@@ -256,18 +259,39 @@ $(document).ready(function(){
             clearInterval(pollTimer);
           } else if (statusData.status === "failed") {
             console.error("Audio generation failed.");
-            $("#audioButton").hide();
+            $(".audio-button").removeClass("blinking audio-ready").addClass("audio-failed");
+            // Wait 2 seconds before hiding the button
+            setTimeout(function() {
+              $(".audio-button").hide();
+            }, 2000);
             clearInterval(pollTimer);
+          } else {
+            // Continue polling if status is pending, but stop if maximum attempts are reached
+            if (attemptCount >= maxAttempts) {
+              console.error("Audio generation timed out.");
+              $(".audio-button").removeClass("blinking audio-ready").addClass("audio-failed");
+              setTimeout(function() {
+                $(".audio-button").hide();
+              }, 2000);
+              clearInterval(pollTimer);
+            }
           }
         },
         error: function(err) {
           console.log("Error polling audio status:", err);
+          $(".audio-button").removeClass("blinking audio-ready").addClass("audio-failed");
+          setTimeout(function() {
+            $(".audio-button").hide();
+          }, 2000);
+          clearInterval(pollTimer);
         }
       });
     };
+    
     var pollTimer = setInterval(pollAudioStatus, pollInterval);
   }
 });
+
 
 
 
